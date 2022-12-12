@@ -1,0 +1,11 @@
+  1.  Set up a data lake or data warehouse to store the sales data from the different business units. This can be a scalable, cloud-based solution that can handle large amounts of data like AWS.
+
+ 2.   Set up a real-time data pipeline for the retail company's ERP system. This could involve using an XML parser to extract the relevant data from the API and load it into the data lake or data warehouse in real-time.
+
+ 3.  Set up a batch processing pipeline for the chicken broiler/farm ERP system. This could involve using a scheduler to periodically check for new batch files on the FTP server, and then using a parser to extract the data from the files and load it into the data lake or data warehouse.
+
+ 4.  Set up a manual data import process for the trading company's ERP system. This could involve providing the necessary instructions to the users who are responsible for downloading the Excel files, and then using a tool to import the data from the files into the data lake or data warehouse.
+
+ 5.   Set up a dashboard that can connect to the data lake or data warehouse and display the sales data from the different business units. This dashboard could include various visualizations and analysis tools that allow the revenue optimization team to quickly and easily see how the sales are performing on a daily basis.
+
+Overall, this data pipeline would allow the revenue optimization team to access and analyze the sales data from the different business units in a timely and efficient manner, enabling them to make better decisions and optimize their revenue.
