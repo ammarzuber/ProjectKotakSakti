@@ -1,0 +1,75 @@
+# show schema generation query
+CREATE DATABASE IF NOT EXISTS bookstore_POS
+#Customer table
+CREATE  TABLE IF NOT EXISTS `customers` (    			
+  `id` INT  AUTO__INCREMENT ,
+  `name` VARCHAR(150) NOT NULL ,
+  `email` VARCHAR(150) ,
+  `tel` VARCHAR(20) ,
+  `created_at` DATETIME ,
+  `updated_at` DATETIME ,
+  PRIMARY KEY (`ID`) );
+  
+  
+  
+#invoices table
+CREATE  TABLE IF NOT EXISTS `invoices` (
+  `id` INT  AUTOINCREMENT ,
+  `number` VARCHAR(150) NOT NULL ,
+  `sub_total` FLOAT(10,2) ,
+  `tax_total` FLOAT(10,2) ,
+  `total` FLOAT(10,2) ,
+  `updated_at` DATETIME ,
+  `customer_id` INT ,
+  `created_at` DATETIME ,
+  `updated_at` DATETIME ,
+  PRIMARY KEY (`ID`),
+  FOREIGN KEY (customer_id) REFERENCES customers(id) );
+  
+  
+  
+#invoices_lines table
+CREATE  TABLE IF NOT EXISTS `invoice_lines` (
+  `id` INT  AUTOINCREMENT ,
+  `description` VARCHAR(150) NOT NULL ,
+  `unit_price` INT ,
+  `sub_total` FLOAT(10,2) ,
+  `tax_total` FLOAT(10,2) ,
+   `quantity` INT,
+  `tax_id` INT ,
+  `sku_id` INT ,
+  `invoice_id` INT ,
+  `created_at` DATETIME ,
+  `updated_at` DATETIME ,
+  PRIMARY KEY (`ID`),
+  FOREIGN KEY (invoice_id) REFERENCES invoices(id) );
+  
+  
+  
+#b. Show the SQL Query for number of customers purchasing more than 5 books
+SELECT count(*) `Number of customers purchase more than 5 books`
+from
+(SELECT  customers.id `Customer ID` , count(distinct invoices.number) `Number of orders` , sum(invoice_lines.quantity) `Number of books bought` from customers
+join invoices on invoices.customer_id = customer.id
+join invoice_lines on invoice_lines.invoice_id = invoices.id
+group by customers.id
+having `Number of books bought` > 5)
+
+
+
+
+
+#c. Show the SQL query for a list of customers who never purchased anything
+SELECT count(distinct customers.id) `Customer ID` , count(invoices.number) `Number of orders` from customers
+join invoices on invoices.customer_id = customers.id
+group by customer_id
+having `Number of orders` = 0
+
+
+
+
+#d. Show the SQL Query for list of book purchased with the users
+SELECT  customers.id `Customer ID`  ,group_concat(invoice_lines.description) `List of books bought` from customers
+join invoices on invoices.customer_id = customers.id
+join invoice_lines on invoice_lines.invoice_id = invoices.id
+group by customers.id
